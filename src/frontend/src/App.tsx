@@ -9,6 +9,20 @@ const CA = "HgAEQbgPU8o8g8oAsNgu2hgQ87eQEBNfVourwznepump";
 const DEX_URL =
   "https://dexscreener.com/solana/2zYu5jZRaUayoU3qTEfnS2iWN4BHKgznUYkeopRgCEAP";
 const TWITTER_URL = "https://x.com/kingofkingz?s=21";
+const TIKTOK_URL = "https://www.tiktok.com/@king_of_kingz__";
+
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" />
+    </svg>
+  );
+}
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -238,7 +252,7 @@ function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="flex items-center gap-6 mt-6"
+          className="flex items-center gap-6 mt-6 flex-wrap justify-center"
         >
           <a
             href={TWITTER_URL}
@@ -255,6 +269,17 @@ function HeroSection() {
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.858L1.764 2.25h7.098l4.254 5.622 4.928-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
             @kingofkingz
+          </a>
+          <span className="text-white/20">|</span>
+          <a
+            href={TIKTOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-white/60 hover:text-gold transition-colors text-sm uppercase tracking-widest"
+            data-ocid="hero.link"
+          >
+            <TikTokIcon className="w-5 h-5" />
+            TikTok
           </a>
           <span className="text-white/20">|</span>
           <a
@@ -381,7 +406,7 @@ function DistributionSection() {
   const cards = [
     {
       icon: "🔥",
-      percentage: "6%",
+      percentage: "10%",
       title: "Burned",
       description:
         "Permanently removed from circulation in the Incinerator, reducing supply and strengthening the Kingdom.",
@@ -644,7 +669,7 @@ function Footer({ visitorCount }: { visitorCount: bigint | undefined }) {
           </div>
 
           {/* Links */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 flex-wrap justify-center">
             <a
               href={TWITTER_URL}
               target="_blank"
@@ -660,6 +685,16 @@ function Footer({ visitorCount }: { visitorCount: bigint | undefined }) {
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.858L1.764 2.25h7.098l4.254 5.622 4.928-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
               Twitter / X
+            </a>
+            <a
+              href={TIKTOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white/50 hover:text-white/90 transition-colors text-sm uppercase tracking-wider"
+              data-ocid="footer.link"
+            >
+              <TikTokIcon className="w-4 h-4" />
+              TikTok
             </a>
             <a
               href={DEX_URL}
