@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useActor } from "./hooks/useActor";
 import { useVisit, useVisitorCount } from "./hooks/useQueries";
@@ -21,6 +21,88 @@ function TikTokIcon({ className }: { className?: string }) {
     >
       <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" />
     </svg>
+  );
+}
+
+function VideoBackground() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Ensure video properties are set
+    video.muted = true;
+    video.playsInline = true;
+
+    const tryPlay = () => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay blocked — try again on first user interaction
+          const resume = () => {
+            video.play().catch(() => {});
+            document.removeEventListener("click", resume);
+            document.removeEventListener("touchstart", resume);
+          };
+          document.addEventListener("click", resume, { once: true });
+          document.addEventListener("touchstart", resume, { once: true });
+        });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      tryPlay();
+    } else {
+      video.addEventListener("canplay", tryPlay, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener("canplay", tryPlay);
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-0 overflow-hidden">
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        autoPlay
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
+        className="absolute inset-0 w-full h-full object-cover"
+        style={
+          {
+            filter: "brightness(0.65) saturate(1.1)",
+            pointerEvents: "none",
+            WebkitMediaControls: "none",
+          } as React.CSSProperties
+        }
+      >
+        <source src="/assets/king-bg.mp4" type="video/mp4" />
+      </video>
+      {/* Dark overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.65) 80%, rgba(11,11,11,0.95) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+      {/* Subtle vignette */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+    </div>
   );
 }
 
@@ -292,19 +374,6 @@ function HeroSection() {
             DEX Screener
           </a>
         </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-white/30 text-xs uppercase tracking-widest">
-          Scroll
-        </span>
-        <div className="w-px h-12 bg-gradient-to-b from-[#D4AF37]/40 to-transparent" />
       </motion.div>
     </section>
   );
@@ -736,34 +805,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen" style={{ background: "#0B0B0B" }}>
       {/* Fixed video background */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "brightness(0.65) saturate(1.1)" }}
-        >
-          <source src="/assets/king-bg.mp4" type="video/mp4" />
-        </video>
-        {/* Dark overlay */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.65) 80%, rgba(11,11,11,0.95) 100%)",
-          }}
-        />
-        {/* Subtle vignette */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)",
-          }}
-        />
-      </div>
+      <VideoBackground />
 
       {/* Content */}
       <div className="relative z-10">
