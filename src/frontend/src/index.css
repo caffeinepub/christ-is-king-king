@@ -1,0 +1,200 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap");
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Gold accent tokens */
+    --gold: 0.76 0.12 85;
+    --gold-light: 0.88 0.1 85;
+    --gold-dark: 0.52 0.09 75;
+
+    /* Dark background tokens */
+    --background: 0.09 0 0;
+    --foreground: 0.96 0 0;
+    --card: 0.13 0 0;
+    --card-foreground: 0.96 0 0;
+    --popover: 0.13 0 0;
+    --popover-foreground: 0.96 0 0;
+    --primary: 0.76 0.12 85;
+    --primary-foreground: 0.1 0 0;
+    --secondary: 0.17 0 0;
+    --secondary-foreground: 0.96 0 0;
+    --muted: 0.17 0 0;
+    --muted-foreground: 0.65 0 0;
+    --accent: 0.76 0.12 85;
+    --accent-foreground: 0.1 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.76 0.12 85 / 20%;
+    --input: 0.76 0.12 85 / 15%;
+    --ring: 0.76 0.12 85;
+    --chart-1: 0.76 0.12 85;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.13 0 0;
+    --sidebar-foreground: 0.96 0 0;
+    --sidebar-primary: 0.76 0.12 85;
+    --sidebar-primary-foreground: 0.1 0 0;
+    --sidebar-accent: 0.17 0 0;
+    --sidebar-accent-foreground: 0.96 0 0;
+    --sidebar-border: 0.76 0.12 85 / 20%;
+    --sidebar-ring: 0.76 0.12 85;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: oklch(var(--gold));
+  }
+
+  .text-gold-light {
+    color: oklch(var(--gold-light));
+  }
+
+  .bg-gold {
+    background-color: oklch(var(--gold));
+  }
+
+  .border-gold {
+    border-color: oklch(var(--gold));
+  }
+
+  .border-gold-dim {
+    border-color: oklch(var(--gold) / 0.3);
+  }
+
+  .font-cinzel {
+    font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  }
+
+  .font-sans-display {
+    font-family: "General Sans", sans-serif;
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(
+      135deg,
+      oklch(0.65 0.09 75) 0%,
+      oklch(0.88 0.1 85) 40%,
+      oklch(0.76 0.12 85) 60%,
+      oklch(0.95 0.08 90) 80%,
+      oklch(0.76 0.12 85) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-glow {
+    filter: drop-shadow(0 0 20px oklch(0.76 0.12 85 / 0.7));
+  }
+
+  .hero-text-shadow {
+    text-shadow: 0 0 60px oklch(0.76 0.12 85 / 0.8), 0 0 120px
+      oklch(0.76 0.12 85 / 0.4), 0 4px 16px rgba(0, 0, 0, 0.9);
+  }
+
+  .panel-bg {
+    background: linear-gradient(
+      135deg,
+      oklch(0.13 0 0 / 0.45) 0%,
+      oklch(0.15 0.005 85 / 0.45) 100%
+    );
+    backdrop-filter: blur(12px);
+    border: 1px solid oklch(0.76 0.12 85 / 0.25);
+  }
+
+  .gold-btn {
+    background: linear-gradient(
+      135deg,
+      oklch(0.6 0.1 80) 0%,
+      oklch(0.76 0.12 85) 40%,
+      oklch(0.82 0.11 88) 60%,
+      oklch(0.72 0.11 82) 100%
+    );
+    color: oklch(0.1 0 0);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 0 4px 20px oklch(0.76 0.12 85 / 0.4), 0 2px 8px
+      rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease;
+  }
+
+  .gold-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px oklch(0.76 0.12 85 / 0.6), 0 4px 12px
+      rgba(0, 0, 0, 0.5);
+  }
+
+  .outline-gold-btn {
+    background: transparent;
+    color: oklch(0.76 0.12 85);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1.5px solid oklch(0.76 0.12 85);
+    box-shadow: 0 0 12px oklch(0.76 0.12 85 / 0.2);
+    transition: all 0.2s ease;
+  }
+
+  .outline-gold-btn:hover {
+    background: oklch(0.76 0.12 85 / 0.1);
+    box-shadow: 0 0 24px oklch(0.76 0.12 85 / 0.4);
+    transform: translateY(-1px);
+  }
+
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.76 0.12 85 / 0.6),
+      transparent
+    );
+  }
+
+  .section-heading {
+    font-family: "Cinzel", "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+}
